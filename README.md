@@ -1,66 +1,30 @@
-## Foundry
+## Installation
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+- Install foundry-fund-me
+```bash
+    git clone https://github.com/SamkitSoni/Foundry-fundME
+    cd Foundry-fundME
 ```
 
-### Test
-
-```shell
-$ forge test
+- Make a .env file
+```bash
+    touch .env
 ```
 
-### Format
-
-```shell
-$ forge fmt
+- Open the .env file and fill in the details similar to:
+```env
+    SEPOLIA_RPC_URL=<YOUR SEPOLIA RPC URL>
+    MAINNET_RPC_URL=<YOUR MAINNET RPC URL>
+    ETHERSCAN_API_KEY=<YOUR ETHERSCAN API KEY>
+    PRIVATE_KEY=<YOUR PRIVATE KEY>
 ```
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
+- Install dependencies and libraries
+```bash
+    make install
 ```
+## 🔗 Links
+Found it good? Lets connect on:
 
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/Samkit_Soni12)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/samkit-soni-bab741250/)
