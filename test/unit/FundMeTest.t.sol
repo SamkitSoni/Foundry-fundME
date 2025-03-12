@@ -5,7 +5,7 @@ import {Test, console} from "forge-std/Test.sol";
 import {FundMe} from "../../src/FundMe.sol";
 import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
 
-contract FundMeTest is Test{
+contract FundMeTest is Test {
     FundMe fundMe;
 
     address USER = makeAddr("USER");
@@ -18,18 +18,21 @@ contract FundMeTest is Test{
         DeployFundMe deployFundMe = new DeployFundMe();
         fundMe = deployFundMe.run();
         vm.deal(USER, 10 ether);
-
     }
+
     function testMinUSDisfive() public view {
         assertEq(fundMe.MINIMUM_USD(), 5e18);
     }
+
     function testOwner() public view {
         assertEq(fundMe.getOwner(), msg.sender);
     }
+
     function testPriceFeedVersionIsAccurate() public view {
         uint256 version = fundMe.getVersion();
-        assertEq(version, 4); 
+        assertEq(version, 4);
     }
+
     function testFundFailsWithoutEnoughETH() public {
         vm.expectRevert();
         fundMe.fund();
@@ -40,25 +43,29 @@ contract FundMeTest is Test{
         fundMe.fund{value: SEND_VAL}();
         _;
     }
-    function testFundUpdates() public funded{
+
+    function testFundUpdates() public funded {
         //The next transaction will be send by USER
         //This below fundMe.fund will be send by the USER
         uint256 amountFunded = fundMe.getAddressToAmountFunded(USER);
         assertEq(amountFunded, SEND_VAL);
     }
-    function testAddsFundertoArrayofFunders() public funded{
+
+    function testAddsFundertoArrayofFunders() public funded {
         address funder = fundMe.getFunders(0);
         assertEq(funder, USER);
     }
-    function testOnlyOwnerCanWithdraw() public funded{
+
+    function testOnlyOwnerCanWithdraw() public funded {
         vm.expectRevert();
         fundMe.withdraw();
     }
-    function testWithdrawWithSingleFunder() public funded{
+
+    function testWithdrawWithSingleFunder() public funded {
         //Arrange
         uint256 startingOwnerBalance = fundMe.getOwner().balance;
         uint256 startingFundMeBalance = address(fundMe).balance;
-        //Act 
+        //Act
         // uint256 gasStart = gasleft();
         // vm.txGasPrice(GAS_PRICE);
         vm.prank(fundMe.getOwner());
@@ -72,11 +79,12 @@ contract FundMeTest is Test{
         assertEq(endingOwnerBalance - startingOwnerBalance, startingFundMeBalance);
         assertEq(endingFundMeBalance, 0); //withdrawn all the money
     }
+
     function testWithdrawWithMultipleFunder() public funded {
         //Arrange
         uint160 numberOfFunders = 10;
         uint160 startingFundingAddress = 1;
-        for (uint160 i = startingFundingAddress ; i < numberOfFunders ; i++) {
+        for (uint160 i = startingFundingAddress; i < numberOfFunders; i++) {
             hoax(address(i), SEND_VAL);
             fundMe.fund{value: SEND_VAL}();
         }
@@ -89,6 +97,5 @@ contract FundMeTest is Test{
         //Assert
         assertEq(startingOwnerBalance + startingFundMeBalance, fundMe.getOwner().balance);
         assertEq(address(fundMe).balance, 0);
-
     }
 }
